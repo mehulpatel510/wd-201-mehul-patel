@@ -60,4 +60,8 @@ end
 dns_records = parse_dns(dns_raw)
 lookup_chain = [domain]
 lookup_chain = resolve(dns_records, lookup_chain, domain)
+<<<<<<< HEAD
 puts lookup_chain.join(" => ")
+=======
+puts lookup_chain.join(" => ")
+>>>>>>> 990536ea33d4534f0453059abb7a756481ad566a
