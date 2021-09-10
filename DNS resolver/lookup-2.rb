@@ -21,32 +21,35 @@ dns_raw = File.readlines("zone")
 #parse the data from raw to hash
 def parse_dns(dns_raw)
     dns_records = {}
-    dns_raw.
-        reject {|line| line.empty? }.
-        map {|line| line.strip.split(", ") }.
-        reject do |record|
-            # 'Reject' records that aren't valid.
-            record.length ==0 or record[0].start_with?('#')
-        end.
-        each_with_object({}) do |record, records|
-            # Modify the `records` hash so that it contains necessary details.
-            dns_records[record[1]] = record[2]    
+    dns_raw.each do |raw|
+        #skip comment line
+        if raw.start_with?('#') == false
+            data = raw.split(",")
+            #skip the blank line
+            if data.length == 3
+                dns_records[data[1].strip] = data[2].strip    
+            end
         end
-    dns_records
+    end
+    return dns_records
 end
 
 #resolve the dns name to ip address
 def resolve(dns_records,lookup_chain,domain)
+    #check the dns records have a domain or not 
     if dns_records.keys.include?(domain)
-        source = dns_records[domain]
-        lookup_chain.push(source)
-        if source.split(".").length == 4
-            lookup_chain
+        #find the matching record
+        v = dns_records[domain]
+        lookup_chain.push(v)
+        #to check it ip address or alias domain name
+        if v.split(".").length == 4
+            return lookup_chain
         else
-            resolve(dns_records,lookup_chain,source)
+            #recursice call to resolve function
+            resolve(dns_records,lookup_chain,v)
         end
     else
-        lookup_chain.clear.push("Error: record not found for #{domain}")    
+        return ["Error: record not found for gmil.com"]    
     end
     
 end
