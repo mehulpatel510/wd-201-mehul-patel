@@ -8,17 +8,9 @@ class Todo
   end
 
   def to_displayable_string
-    display_string = ""
-    if @completed
-        display_string += "[X] "
-    else
-         display_string += "[ ] "
-    end
-    display_string += @text
-    if due_today? == false
-        display_string += " #{@due_date}"
-    end
-    display_string
+    display_status = @completed ? "[X]" : "[ ]" 
+    display_date =  "#{@due_date}" if due_today?
+    "#{display_status} #{@text} #{display_date}"
   end
 
   def overdue?
