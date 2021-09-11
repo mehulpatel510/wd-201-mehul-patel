@@ -1,10 +1,6 @@
 require "date"
 
 class Todo
-  @text
-  @due_date
-  @completed
-
   def initialize(text,due_date,completed)
     @text = text
     @due_date = due_date
@@ -22,7 +18,7 @@ class Todo
     if due_today? == false
         display_string += " #{@due_date}"
     end
-    return display_string
+    display_string
   end
 
   def overdue?
@@ -37,8 +33,6 @@ class Todo
 end
 
 class TodosList
-    @todos = []
-
   def initialize(todos)
     @todos = todos
   end
@@ -61,10 +55,8 @@ class TodosList
 
   def to_displayable_list
     todo_text = []
-    @todos.each do |todo| 
-        todo_text.push(todo.to_displayable_string)
-    end
-    return todo_text.join("\n")
+    todo_text = @todos.map { |todo| todo.to_displayable_string }
+    todo_text.join("\n")
   end
 end
 
