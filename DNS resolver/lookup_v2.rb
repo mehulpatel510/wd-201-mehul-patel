@@ -7,6 +7,7 @@ def get_command_line_argument
       puts "Usage: ruby lookup.rb <domain>"
       exit
     end
+<<<<<<< HEAD:DNS resolver/lookup.rb
     ARGV.first
   end
   
@@ -58,3 +59,15 @@ def get_command_line_argument
   lookup_chain = [domain]
   lookup_chain = resolve(dns_records, lookup_chain, domain)
   puts lookup_chain.join(" => ")
+=======
+    
+end
+
+# To complete the assignment, implement `parse_dns` and `resolve`.
+# Remember to implement them above this line since in Ruby
+# you can invoke a function only after it is defined.
+dns_records = parse_dns(dns_raw)
+lookup_chain = [domain]
+lookup_chain = resolve(dns_records, lookup_chain, domain)
+puts lookup_chain.join(" => ")
+>>>>>>> cbd97562fb999f9acfcb8f208ffee60b596dee5c:DNS resolver/lookup_v2.rb
